@@ -1,7 +1,7 @@
 import { CapacitorConfig } from '@capacitor/cli';
 
 const config: CapacitorConfig = {
-  appId: 'io.ionic.starter',
+  appId: 'io.jsrtc.blog',
   appName: 'msrtc',
   webDir: 'www',
   server: {

@@ -1,0 +1,25 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+
+
+</ion-header>
+<ion-content [fullscreen]="true">
+  <div id="container" style="height: 100%;">
+    <div class="example-header text-right">
+      Page Size:
+      <select (change)="onPageSizeChanged()" id="page-size">
+        <option value="10">10</option>
+        <option value="100">100</option>
+        <option value="500">500</option>
+        <option value="1000">1000</option>
+      </select>
+    </div>
+    <ag-grid-angular style="height: 500px;" class="ag-theme-alpine m-auto" id="myGrid" [animateRows]="true" (gridReady)="onGridReady($event)" [gridOptions]="gridOptions" [rowData]="rowData" [columnDefs]="columnDefs" [cacheQuickFilter]="true" [defaultColDef]="defaultColDef" [pagination]="true" [paginationPageSize]="10">
+    </ag-grid-angular>
+    <!-- <ag-grid-angular style="width: 100%; height: 100%;" class="ag-theme-alpine" [animateRows]="true" [columnDefs]="columnDefs" [defaultColDef]="defaultColDef" [rowData]="rowData" (gridReady)="onGridReady($event)"></ag-grid-angular> -->
+  </div>
+</ion-content>
