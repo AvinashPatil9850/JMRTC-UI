@@ -50,7 +50,6 @@ export class HomePage {
   getAllBusList() {
     this._msertcService.getAllBussess().subscribe(res => {
       this.allBussessArray = res;
-      console.log("allBussessArray", this.allBussessArray)
     },
       (error) => {
         this.isServerDown = true;
@@ -60,11 +59,9 @@ export class HomePage {
   getAllStopsListArray() {
     this._msertcService.GetAllRouteStopList().subscribe(res => {
       this.getAllStopsList = res;
-      console.log("GetAllRouteStopList", this.getAllStopsList)
     })
   }
   blurInput() {
-    debugger
     if (!this.validSource) {
       this.sourceControl.setValue("");
     }
@@ -86,16 +83,8 @@ export class HomePage {
     this.destinationName = $event;
   }
   Search() {
-    debugger
-    // console.log("from-to", this.allBussessArray.filter((x: any) => x.busRoute.indexOf(this.sourceName) > x.busRoute.indexOf(this.destinationName)));
-    // if (this.allBussessArray.filter((x: any) => x.busRoute.indexOf(this.sourceName) > x.busRoute.indexOf(this.destinationName))) {
-    //   this.searchedBussess = this.allBussessArray.filter((x: any) => x.busRoute.includes(this.sourceName) && x.busRoute.includes(this.destinationName));
-    //   debugger
-    // }
     let searchedRoute = this.allBussessArray.filter((x: any) => x.busRoute.toLowerCase().indexOf(this.sourceName.toLowerCase()) < x.busRoute.toLowerCase().indexOf(this.destinationName.toLowerCase()))
-    console.log('searchedRoute', searchedRoute);
     this.searchedBussess = searchedRoute.filter((x: any) => x.busRoute.toLowerCase().includes(this.sourceName.toLowerCase()) && x.busRoute.toLowerCase().includes(this.destinationName.toLowerCase()))
-    console.log('searchedBussess', this.searchedBussess);
     this.isSearchedBusRoute = true;
   }
 

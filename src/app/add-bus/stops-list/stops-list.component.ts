@@ -54,24 +54,7 @@ export class StopsListComponent implements OnInit {
     this.gridApi = params.api;
 
   }
-  // getAllRouteStopsList() {
-  //   this._msertcService.GetAllRouteStopList().subscribe(res => {
-  //     this.allStopsArray = res;
-  //     console.log("allStopsArray", this.allStopsArray)
-  //     this.rowData = this.allStopsArray;
-  //     this.setColumnHeader();
-  //     this.gridOptions = {
-  //       rowData: this.rowData,
-  //       columnDefs: this.columnDefs,
-  //       pagination: true,
-  //       rowSelection: 'single',
-  //       paginationPageSize: this.paginationSize,
-  //       unSortIcon: false,
-  //       suppressClickEdit: true
-  //     }
 
-  //   })
-  // }
   getAllRouteStopsList() {
     this._msertcService.getAllStopsList().subscribe({
       next: (res: any) => {
@@ -171,7 +154,6 @@ export class StopsListComponent implements OnInit {
     this.gridApi.paginationSetPageSize(Number(value));
   }
   onBtnCellRendererClick(params: ICellRendererParams) {
-    debugger
     let data: any = params
     if (data.action == 'delete') {
       let deleteObj = {

@@ -135,7 +135,6 @@ export class DestinationListComponent implements OnInit {
     this.gridApi.paginationSetPageSize(Number(value));
   }
   onBtnCellRendererClick(params: ICellRendererParams) {
-    debugger
     let data: any = params
     if (data.action == 'delete') {
       let deleteObj = {

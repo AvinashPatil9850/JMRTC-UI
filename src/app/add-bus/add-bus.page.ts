@@ -88,7 +88,6 @@ export class AddBusPage implements OnInit {
     this.stops.removeAt(i);
   }
   submit() {
-    console.log("add bus object", this.addBusForm.value);
     let route = this.addBusForm.value.stops.map((x: any) => x.stop)
     let cRoute = route.join('-');
     this.addBusForm.patchValue({ busRoute: cRoute });
@@ -226,7 +225,6 @@ export class AddBusPage implements OnInit {
     }
   }
   onStopsWillDismiss(event: Event) {
-    debugger
     const ev = event as CustomEvent<OverlayEventDetail<string>>;
     if (ev.detail.role === 'confirm') {
       // this.message = `Hello, ${ev.detail.data}!`;

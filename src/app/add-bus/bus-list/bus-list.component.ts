@@ -62,13 +62,10 @@ export class BusListComponent implements OnInit {
 
   }
   getAllBusList() {
-    debugger
     this._msertcService.getAllBussess().subscribe(res => {
       this.allBussessArray = res;
-      console.log("bussss", this.allBussessArray)
       let result = this.allBussessArray.map((a: any) => a.weekDays.map((x: any) => x.abbr));
       let t = result.join('-');
-      console.log("result", t)
 
 
       this.rowData = this.allBussessArray;
