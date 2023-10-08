@@ -19,37 +19,23 @@ export class HomePage {
   sourceName: string = '';
   destinationName: string = '';
   isSearchedBusRoute = false;
-  constructor(private _msertcService: MsrtcService) { }
-
-
-
   sourceControl = new FormControl('');
   destinationControl = new FormControl('');
   getAllStopsList: any = [];
   filteredSoruceOptions: any;
   filteredDestinationOptions: any;
-
   validSource = false;
   isServerDown = false;
+  constructor(private _msertcService: MsrtcService) { }
 
   ngOnInit() {
-
     this.getAllBusList();
     this.getAllStopsListArray();
-
-    this.filteredSoruceOptions = this.sourceControl.valueChanges.pipe(
-      startWith(''),
-      map(value => this._filterSource(value || '')),
-    );
-    this.filteredDestinationOptions = this.destinationControl.valueChanges.pipe(
-      startWith(''),
-      map(value => this._filterDestination(value || '')),
-    );
-    this.validSource = this.filteredSoruceOptions.length > 0;
   }
   getAllBusList() {
     this._msertcService.getAllBussess().subscribe(res => {
       this.allBussessArray = res;
+      console.log("allBussessArray", this.allBussessArray)
     },
       (error) => {
         this.isServerDown = true;
@@ -59,7 +45,19 @@ export class HomePage {
   getAllStopsListArray() {
     this._msertcService.GetAllRouteStopList().subscribe(res => {
       this.getAllStopsList = res;
-    })
+      this.filterSourceAndDestination();
+    });
+  }
+  filterSourceAndDestination() {
+    this.filteredSoruceOptions = this.sourceControl.valueChanges.pipe(
+      startWith(''),
+      map(value => this._filterSource(value || '')),
+    );
+    this.filteredDestinationOptions = this.destinationControl.valueChanges.pipe(
+      startWith(''),
+      map(value => this._filterDestination(value || '')),
+    );
+    this.validSource = this.filteredSoruceOptions.length > 0;
   }
   blurInput() {
     if (!this.validSource) {

@@ -1,8 +1,7 @@
-import { Component, Input, OnInit, ViewChild } from '@angular/core';
-import { Form, FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MsrtcService } from '../services/msrtc.service';
 import { IonModal } from '@ionic/angular';
-import { OverlayEventDetail } from '@ionic/core/components';
 import { BusListComponent } from './bus-list/bus-list.component';
 import { NgToastService } from 'ng-angular-popup';
 import { StopsListComponent } from './stops-list/stops-list.component';
@@ -153,12 +152,6 @@ export class AddBusPage implements OnInit {
     })
   }
 
-  onWillDismiss(event: Event) {
-    const ev = event as CustomEvent<OverlayEventDetail<string>>;
-    if (ev.detail.role === 'confirm') {
-      // this.message = `Hello, ${ev.detail.data}!`;
-    }
-  }
 
   //stops form start
   addStopsOnInit() {
@@ -224,11 +217,6 @@ export class AddBusPage implements OnInit {
       this.filteredStopsArray = this.getAllStopsListArray.filter((x: any) => x.source == this.sourceModel && x.destination == this.destinationModel);
     }
   }
-  onStopsWillDismiss(event: Event) {
-    const ev = event as CustomEvent<OverlayEventDetail<string>>;
-    if (ev.detail.role === 'confirm') {
-      // this.message = `Hello, ${ev.detail.data}!`;
-    }
-  }
+
   //stops form end
 }

@@ -36,13 +36,15 @@
                     <ion-col size-sm="6" size-xs="6">
                         <mat-form-field class="example-full-width">
                             <mat-label>Bus Depo</mat-label>
-                            <input type="text" placeholder="Pick one" aria-label="From" matInput formControlName="busDepo" readonly>
+                            <input type="text" placeholder="Pick one" aria-label="From" matInput
+                                formControlName="busDepo" readonly>
                         </mat-form-field>
                     </ion-col>
                     <ion-col size-sm="6" size-xs="6">
                         <mat-form-field class="example-full-width">
                             <mat-label>Bus Time</mat-label>
-                            <input type="time" placeholder="Pick one" aria-label="From" matInput formControlName="busTime">
+                            <input type="time" placeholder="Pick one" aria-label="From" matInput
+                                formControlName="busTime">
                         </mat-form-field>
                     </ion-col>
                 </ion-row>
@@ -71,7 +73,8 @@
                     <ion-col size-sm="6" size-xs="6">
                         <mat-form-field class="example-full-width">
                             <mat-label>Source</mat-label>
-                            <mat-select (selectionChange)="filterStops()" [(ngModel)]="sourceModel" formControlName="source" name="source">
+                            <mat-select (selectionChange)="filterStops()" [(ngModel)]="sourceModel"
+                                formControlName="source" name="source">
                                 <mat-option *ngFor="let item of getDestinationArray" [value]="item.destination">
                                     {{item.destination}}
                                 </mat-option>
@@ -81,7 +84,8 @@
                     <ion-col size-sm="6" size-xs="6">
                         <mat-form-field class="example-full-width">
                             <mat-label>Destination</mat-label>
-                            <mat-select (selectionChange)="filterStops()" [(ngModel)]="destinationModel" formControlName="destination" name="destination">
+                            <mat-select (selectionChange)="filterStops()" [(ngModel)]="destinationModel"
+                                formControlName="destination" name="destination">
                                 <mat-option *ngFor="let item of getDestinationArray" [value]="item.destination">
                                     {{item.destination}}
                                 </mat-option>
@@ -105,7 +109,8 @@
                         <ion-col size-sm="5" size-xs="5">
                             <mat-form-field class="example-full-width">
                                 <mat-label>Time</mat-label>
-                                <input type="time" placeholder="Pick one" aria-label="From" matInput formControlName="time">
+                                <input type="time" placeholder="Pick one" aria-label="From" matInput
+                                    formControlName="time">
                             </mat-form-field>
                         </ion-col>
                         <ion-col size-sm="1" size-xs="1" *ngIf="i>0">
@@ -143,7 +148,7 @@
     </div>
 </ion-content>
 
-<ion-modal trigger="add-destination" (willDismiss)="onWillDismiss($event)">
+<ion-modal trigger="add-destination">
     <ng-template>
         <ion-header>
             <ion-toolbar>
@@ -152,7 +157,8 @@
                 </ion-buttons>
                 <ion-title class="ion-text-center">Add Destinations</ion-title>
                 <ion-buttons slot="end">
-                    <ion-button fill="outline" [disabled]="!addDestinationsForm.valid" size="small" color="secondary" (click)="confirm()" [strong]="true">
+                    <ion-button fill="outline" [disabled]="!addDestinationsForm.valid" size="small" color="secondary"
+                        (click)="confirm()" [strong]="true">
                         Confirm</ion-button>
                 </ion-buttons>
             </ion-toolbar>
@@ -164,7 +170,8 @@
                         <ion-col>
                             <mat-form-field class="example-full-width">
                                 <mat-label>Bus Depo</mat-label>
-                                <input type="text" placeholder="Pick one" aria-label="Depo" matInput formControlName="busDepo" readonly>
+                                <input type="text" placeholder="Pick one" aria-label="Depo" matInput
+                                    formControlName="busDepo">
                             </mat-form-field>
                         </ion-col>
                     </ion-row>
@@ -173,7 +180,8 @@
                             <ion-col>
                                 <mat-form-field class="example-full-width">
                                     <mat-label>Destination</mat-label>
-                                    <input type="text" placeholder="Pick one" aria-label="Destination" matInput formControlName="destination">
+                                    <input type="text" placeholder="Pick one" aria-label="Destination" matInput
+                                        formControlName="destination">
                                 </mat-form-field>
                             </ion-col>
                             <ion-col *ngIf="i>0">
@@ -199,7 +207,7 @@
 </ion-modal>
 
 
-<ion-modal trigger="add-stops" (willDismiss)="onStopsWillDismiss($event)">
+<ion-modal trigger="add-stops">
     <ng-template>
         <ion-header>
             <ion-toolbar>
@@ -209,7 +217,8 @@
                 </ion-buttons>
                 <ion-title class="ion-text-center">Add Stops</ion-title>
                 <ion-buttons slot="end">
-                    <ion-button fill="outline" [disabled]="!addStopsForm.valid" size="small" color="secondary" (click)="confirmAddStops()" [strong]="true">
+                    <ion-button fill="outline" [disabled]="!addStopsForm.valid" size="small" color="secondary"
+                        (click)="confirmAddStops()" [strong]="true">
                         Confirm</ion-button>
                 </ion-buttons>
             </ion-toolbar>
@@ -221,7 +230,8 @@
                         <ion-col>
                             <mat-form-field class="example-full-width">
                                 <mat-label>Bus Depo</mat-label>
-                                <input type="text" placeholder="Pick one" aria-label="Depo" matInput formControlName="busDepo" readonly>
+                                <input type="text" placeholder="Pick one" aria-label="Depo" matInput
+                                    formControlName="busDepo" readonly>
                             </mat-form-field>
                         </ion-col>
                     </ion-row>
@@ -253,7 +263,8 @@
                             <ion-col>
                                 <mat-form-field class="example-full-width">
                                     <mat-label>Stops</mat-label>
-                                    <input type="text" placeholder="Pick one" aria-label="StopName" matInput formControlName="stopName">
+                                    <input type="text" placeholder="Pick one" aria-label="StopName" matInput
+                                        formControlName="stopName">
                                 </mat-form-field>
                             </ion-col>
                             <ion-col *ngIf="i>0">
