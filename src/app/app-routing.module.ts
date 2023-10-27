@@ -1,15 +1,13 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
+import { BusListComponent } from './add-bus/bus-list/bus-list.component';
 
 const routes: Routes = [
   {
     path: 'home',
     loadChildren: () => import('./home/home.module').then(m => m.HomePageModule)
   },
-  {
-    path: 'add-bus',
-    loadChildren: () => import('./add-bus/add-bus.module').then(m => m.AddBusPageModule)
-  }
+  { path: 'bus-list', component: BusListComponent }
 
 ];
 

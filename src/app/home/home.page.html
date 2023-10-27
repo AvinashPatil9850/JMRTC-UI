@@ -3,7 +3,7 @@
         <ion-title>
 
             <ion-nav-link router-direction="forward" [component]="component">
-                <ion-button>Navigate</ion-button>
+                <ion-button class="ion-float-right ripple-effect">Add-Bus</ion-button>
             </ion-nav-link>
             <!-- <ion-button class="example-full-width" [routerLink]="['/add-bus']">Add Bus</ion-button> -->
         </ion-title>
@@ -11,21 +11,10 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
-    <ion-header collapse="condense">
-        <ion-toolbar>
-            <ion-nav-link router-direction="forward" [component]="component">
-                <ion-button class="example-full-width">Add-Bus</ion-button>
-            </ion-nav-link>
-        </ion-toolbar>
-    </ion-header>
-
     <div>
-
-        <!-- <ion-button fill="outline" (click)="Source('Jamner')">From</ion-button>
-        <ion-button fill="outline" (click)="Destination('Tondapur')">To</ion-button> -->
         <ion-grid>
             <ion-row>
-                <ion-col size-sm="5" size-xs="5">
+                <ion-col>
                     <mat-form-field class="example-full-width">
                         <mat-label>From</mat-label>
                         <input type="text" placeholder="Pick one" [(ngModel)]="sourceName" aria-label="From" matInput [formControl]="sourceControl" [matAutocomplete]="source">
@@ -36,7 +25,7 @@
                         </mat-autocomplete>
                     </mat-form-field>
                 </ion-col>
-                <ion-col size-sm="5" size-xs="5">
+                <ion-col>
                     <mat-form-field class="example-full-width">
                         <mat-label>To</mat-label>
                         <input type="text" placeholder="Pick one" [(ngModel)]="destinationName" aria-label="To" matInput [formControl]="destinationControl" [matAutocomplete]="destination">
@@ -47,27 +36,40 @@
                         </mat-autocomplete>
                     </mat-form-field>
                 </ion-col>
-                <ion-col size-sm="2" size-xs="2">
-                    <ion-button class="example-full-width" (click)="Search()">GO</ion-button>
+
+            </ion-row>
+            <ion-row>
+                <ion-col>
+                    <ion-button class="example-full-width" (click)="Search()">Search
+                        Bussess</ion-button>
                 </ion-col>
             </ion-row>
         </ion-grid>
     </div>
     <div>
         <marquee behavior="scroll" direction="left">
-            <img src="/assets/icon/left-direction-bus.png" width="120" height="80" alt="Natural" /> Click on bus route
-            to see all stops
+            <img src="/assets/icon/left-direction-bus.png" class="moving-bus" alt="Natural" /><span class="slogan">जिथ
+                तुम्ही तीथ
+                आम्ही</span>
         </marquee>
         <accordion [isAnimated]="true">
             <accordion-group *ngFor="let item of searchedBussess; let i = index" [isOpen]="i===0">
-
                 <button class="btn btn-link btn-block justify-content-between d-flex w-100  shadow-none" accordion-heading type="button">
-                    <div class="pull-left float-left" style="font-size: 16px;">
-                        <p> <img src="/assets/icon/msrtc-down-bus.png" style="width: 35px;" alt="Natural" />
-                            {{item.source}}-{{item.destination}} <span *ngIf="item.via">({{item.via}})</span><span class="badge badge-danger bg-black">{{item.busTime}}</span>
-                            <span *ngFor="let day of item?.weekDays">{{day?.abbr}},</span>
-                        </p>
+                    <div class="d-flex justify-content-between w-100">
+                        <img src="/assets/icon/msrtc-down-bus.png" style="width: 35px;" alt="Natural" />
+                        <div class="bus-route">
+                            {{item.source}}-{{item.destination}} <span *ngIf="item.via">({{item.via}})</span><br />
+                            <span *ngFor="let day of item?.weekDays">
+                                <span class="badge badge-info bg-black mr-1">{{day?.abbr}}</span></span>
+                        </div>
+                        <div>
+                            <ion-icon name="alarm-outline"></ion-icon> <span class="badge badge-danger bg-danger">
+                                {{item.busTime}}
+                            </span>
+                        </div>
+
                     </div>
+
                 </button>
 
                 <table class="table table-striped table-dark">

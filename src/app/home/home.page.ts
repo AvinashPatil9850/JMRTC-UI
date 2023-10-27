@@ -19,33 +19,18 @@ export class HomePage {
   sourceName: string = '';
   destinationName: string = '';
   isSearchedBusRoute = false;
-  constructor(private _msertcService: MsrtcService) { }
-
-
-
   sourceControl = new FormControl('');
   destinationControl = new FormControl('');
   getAllStopsList: any = [];
   filteredSoruceOptions: any;
   filteredDestinationOptions: any;
-
   validSource = false;
   isServerDown = false;
+  constructor(private _msertcService: MsrtcService) { }
 
   ngOnInit() {
-
     this.getAllBusList();
     this.getAllStopsListArray();
-
-    this.filteredSoruceOptions = this.sourceControl.valueChanges.pipe(
-      startWith(''),
-      map(value => this._filterSource(value || '')),
-    );
-    this.filteredDestinationOptions = this.destinationControl.valueChanges.pipe(
-      startWith(''),
-      map(value => this._filterDestination(value || '')),
-    );
-    this.validSource = this.filteredSoruceOptions.length > 0;
   }
   getAllBusList() {
     this._msertcService.getAllBussess().subscribe(res => {
@@ -60,11 +45,21 @@ export class HomePage {
   getAllStopsListArray() {
     this._msertcService.GetAllRouteStopList().subscribe(res => {
       this.getAllStopsList = res;
-      console.log("GetAllRouteStopList", this.getAllStopsList)
-    })
+      this.filterSourceAndDestination();
+    });
+  }
+  filterSourceAndDestination() {
+    this.filteredSoruceOptions = this.sourceControl.valueChanges.pipe(
+      startWith(''),
+      map(value => this._filterSource(value || '')),
+    );
+    this.filteredDestinationOptions = this.destinationControl.valueChanges.pipe(
+      startWith(''),
+      map(value => this._filterDestination(value || '')),
+    );
+    this.validSource = this.filteredSoruceOptions.length > 0;
   }
   blurInput() {
-    debugger
     if (!this.validSource) {
       this.sourceControl.setValue("");
     }
@@ -86,16 +81,8 @@ export class HomePage {
     this.destinationName = $event;
   }
   Search() {
-    debugger
-    // console.log("from-to", this.allBussessArray.filter((x: any) => x.busRoute.indexOf(this.sourceName) > x.busRoute.indexOf(this.destinationName)));
-    // if (this.allBussessArray.filter((x: any) => x.busRoute.indexOf(this.sourceName) > x.busRoute.indexOf(this.destinationName))) {
-    //   this.searchedBussess = this.allBussessArray.filter((x: any) => x.busRoute.includes(this.sourceName) && x.busRoute.includes(this.destinationName));
-    //   debugger
-    // }
     let searchedRoute = this.allBussessArray.filter((x: any) => x.busRoute.toLowerCase().indexOf(this.sourceName.toLowerCase()) < x.busRoute.toLowerCase().indexOf(this.destinationName.toLowerCase()))
-    console.log('searchedRoute', searchedRoute);
     this.searchedBussess = searchedRoute.filter((x: any) => x.busRoute.toLowerCase().includes(this.sourceName.toLowerCase()) && x.busRoute.toLowerCase().includes(this.destinationName.toLowerCase()))
-    console.log('searchedBussess', this.searchedBussess);
     this.isSearchedBusRoute = true;
   }
 

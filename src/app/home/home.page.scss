@@ -1,6 +1,5 @@
 #container {
   text-align: center;
-
   position: absolute;
   left: 0;
   right: 0;
@@ -33,4 +32,23 @@
 .btn-link {
   font-size: 12px;
 
+}
+
+.moving-bus {
+  width: 30% !important;
+}
+
+
+.btn-link {
+  background-color: #fff;
+  color: #000;
+}
+
+.bus-route {
+  font-family: cursive;
+}
+
+.slogan {
+  color: #ff6000;
+  font-size: medium;
 }
