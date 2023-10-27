@@ -22,11 +22,13 @@ import { NgToastModule } from 'ng-angular-popup';
 import { DestinationListComponent } from './add-bus/destination-list/destination-list.component';
 import { StopsListComponent } from './add-bus/stops-list/stops-list.component';
 import { WeekdayscellrendererComponent } from './add-bus/bus-list/weekdayscellrenderer/weekdayscellrenderer.component';
+import { DepoListComponent } from './add-bus/depo-list/depo-list.component';
 
 @NgModule({
   declarations: [AppComponent, AddBusPage, BusListComponent,
-    DestinationListComponent
-    , StopsListComponent,
+    DestinationListComponent,
+    StopsListComponent,
+    DepoListComponent,
     BusListCellRendererComponent,
     WeekdayscellrendererComponent],
 

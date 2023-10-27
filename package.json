@@ -33,6 +33,7 @@
     "ag-grid-angular": "^30.1.0",
     "ag-grid-community": "^30.1.0",
     "bootstrap": "^5.2.3",
+    "firebase": "^10.5.0",
     "ionicons": "^7.0.0",
     "ng-angular-popup": "^0.4.7",
     "ngx-bootstrap": "^11.0.2",

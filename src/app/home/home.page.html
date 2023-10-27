@@ -48,8 +48,9 @@
     </div>
     <div>
         <marquee behavior="scroll" direction="left">
-            <img src="/assets/icon/left-direction-bus.png" class="moving-bus" alt="Natural" /> Click on bus route
-            to see all stops
+            <img src="/assets/icon/left-direction-bus.png" class="moving-bus" alt="Natural" /><span class="slogan">जिथ
+                तुम्ही तीथ
+                आम्ही</span>
         </marquee>
         <accordion [isAnimated]="true">
             <accordion-group *ngFor="let item of searchedBussess; let i = index" [isOpen]="i===0">
@@ -62,7 +63,7 @@
                                 <span class="badge badge-info bg-black mr-1">{{day?.abbr}}</span></span>
                         </div>
                         <div>
-                            <ion-icon name="alarm-outline"></ion-icon> <span class="badge badge-danger bg-info">
+                            <ion-icon name="alarm-outline"></ion-icon> <span class="badge badge-danger bg-danger">
                                 {{item.busTime}}
                             </span>
                         </div>

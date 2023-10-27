@@ -7,7 +7,6 @@ import { Router } from '@angular/router';
 })
 export class MsrtcService {
   baseUrl = 'https://localhost:7184/';
-
   constructor(private http: HttpClient) {
   }
   getAllBussess() {
@@ -20,7 +19,7 @@ export class MsrtcService {
     return this.http.post(this.baseUrl + 'DeleteBus', data);
   }
   getAllDestination() {
-    return this.http.get(this.baseUrl + 'GetAllDestinationList')
+    return this.http.get(this.baseUrl + 'GetAllDestinationDetail')
   }
   addDestination(data: any) {
     return this.http.post(this.baseUrl + 'AddDestination', data);
@@ -35,7 +34,7 @@ export class MsrtcService {
     return this.http.get(this.baseUrl + 'GetAllRouteStopList')
   }
   GetDestinationArr() {
-    return this.http.get(this.baseUrl + 'GetDestinationArr')
+    return this.http.get(this.baseUrl + 'GetDestinationList')
   }
   deleteDestination(data: any) {
     return this.http.post(this.baseUrl + 'DeleteDestinatoin', data)
@@ -43,4 +42,14 @@ export class MsrtcService {
   deleteStop(data: any) {
     return this.http.post(this.baseUrl + 'DeleteStops', data)
   }
+  adddDepo(data: any) {
+    return this.http.post(this.baseUrl + 'AddDepo', data)
+  }
+  getAllDepoList() {
+    return this.http.get(this.baseUrl + 'GetAllDepoList')
+  }
+  deleteDepo(data: any) {
+    return this.http.post(this.baseUrl + 'DeleteDepo', data)
+  }
+
 }

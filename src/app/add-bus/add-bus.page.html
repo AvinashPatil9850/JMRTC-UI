@@ -14,12 +14,10 @@
         <ion-nav-link router-direction="forward" [component]="destinationListComponent">
             <ion-button>Destination List</ion-button>
         </ion-nav-link>
-
-        <ion-button id="add-destination" class="ion-float-right ripple-effect">Add Destination</ion-button>
-        <ion-button id="add-stops" class="ion-float-right ripple-effect">Add Stops</ion-button>
+        <ion-nav-link router-direction="forward" [component]="depoListComponent">
+            <ion-button>Depo List</ion-button>
+        </ion-nav-link>
     </ion-toolbar>
-
-
 </ion-header>
 
 <ion-content [fullscreen]="true">
@@ -36,8 +34,12 @@
                     <ion-col size-sm="6" size-xs="6">
                         <mat-form-field class="example-full-width">
                             <mat-label>Bus Depo</mat-label>
-                            <input type="text" placeholder="Pick one" aria-label="From" matInput
-                                formControlName="busDepo" readonly>
+                            <mat-select (selectionChange)="getAllDestination($event)" placeholder="Pick one"
+                                formControlName="busDepo" name="busDepo">
+                                <mat-option *ngFor="let item of depoList" [value]="item?.busDepo">
+                                    {{item.busDepo}}
+                                </mat-option>
+                            </mat-select>
                         </mat-form-field>
                     </ion-col>
                     <ion-col size-sm="6" size-xs="6">
@@ -93,6 +95,11 @@
                         </mat-form-field>
                     </ion-col>
                 </ion-row>
+                <ion-row><span class="text-danger"
+                        *ngIf="filteredStopsArray?.length < 1 && (sourceModel && destinationModel)">No Stops Available
+                        at this
+                        rote please add stops
+                        first</span></ion-row>
                 <div formArrayName="stops">
                     <ion-row *ngFor="let stop of stops?.controls; index as i" [formGroupName]="i">
 
@@ -147,144 +154,3 @@
         </form>
     </div>
 </ion-content>
-
-<ion-modal trigger="add-destination">
-    <ng-template>
-        <ion-header>
-            <ion-toolbar>
-                <ion-buttons slot="start">
-                    <ion-button fill="outline" size="small" color="danger" (click)="cancel()">Cancel</ion-button>
-                </ion-buttons>
-                <ion-title class="ion-text-center">Add Destinations</ion-title>
-                <ion-buttons slot="end">
-                    <ion-button fill="outline" [disabled]="!addDestinationsForm.valid" size="small" color="secondary"
-                        (click)="confirm()" [strong]="true">
-                        Confirm</ion-button>
-                </ion-buttons>
-            </ion-toolbar>
-        </ion-header>
-        <ion-content class="ion-padding">
-            <form [formGroup]="addDestinationsForm">
-                <ion-grid>
-                    <ion-row>
-                        <ion-col>
-                            <mat-form-field class="example-full-width">
-                                <mat-label>Bus Depo</mat-label>
-                                <input type="text" placeholder="Pick one" aria-label="Depo" matInput
-                                    formControlName="busDepo">
-                            </mat-form-field>
-                        </ion-col>
-                    </ion-row>
-                    <div formArrayName="destinationArr">
-                        <ion-row *ngFor="let d of destinationArr?.controls; index as i" [formGroupName]="i">
-                            <ion-col>
-                                <mat-form-field class="example-full-width">
-                                    <mat-label>Destination</mat-label>
-                                    <input type="text" placeholder="Pick one" aria-label="Destination" matInput
-                                        formControlName="destination">
-                                </mat-form-field>
-                            </ion-col>
-                            <ion-col *ngIf="i>0">
-                                <ion-button size="small" fill="outline" (click)="deleteThisDestination(i)">
-                                    <ion-icon name="close-outline"></ion-icon>
-
-                                </ion-button>
-                            </ion-col>
-                        </ion-row>
-                    </div>
-                    <ion-button size="small" fill="outline" (click)="addDestination()">
-                        <ion-icon name="add-outline"></ion-icon>
-                        Add Destination
-                    </ion-button>
-                    <ion-button size="small" fill="outline" (click)="removeDestination()">
-                        <ion-icon name="add-outline"></ion-icon>
-                        Remove Destination
-                    </ion-button>
-                </ion-grid>
-            </form>
-        </ion-content>
-    </ng-template>
-</ion-modal>
-
-
-<ion-modal trigger="add-stops">
-    <ng-template>
-        <ion-header>
-            <ion-toolbar>
-                <ion-buttons slot="start">
-                    <ion-button fill="outline" size="small" color="danger" (click)="cancelAddStops()">Cancel
-                    </ion-button>
-                </ion-buttons>
-                <ion-title class="ion-text-center">Add Stops</ion-title>
-                <ion-buttons slot="end">
-                    <ion-button fill="outline" [disabled]="!addStopsForm.valid" size="small" color="secondary"
-                        (click)="confirmAddStops()" [strong]="true">
-                        Confirm</ion-button>
-                </ion-buttons>
-            </ion-toolbar>
-        </ion-header>
-        <ion-content class="ion-padding">
-            <form [formGroup]="addStopsForm">
-                <ion-grid>
-                    <ion-row>
-                        <ion-col>
-                            <mat-form-field class="example-full-width">
-                                <mat-label>Bus Depo</mat-label>
-                                <input type="text" placeholder="Pick one" aria-label="Depo" matInput
-                                    formControlName="busDepo" readonly>
-                            </mat-form-field>
-                        </ion-col>
-                    </ion-row>
-                    <ion-row>
-                        <ion-col>
-                            <mat-form-field class="example-full-width">
-                                <mat-label>Source</mat-label>
-                                <mat-select formControlName="source" name="source">
-                                    <mat-option *ngFor="let item of getDestinationArray" [value]="item.destination">
-                                        {{item.destination}}
-                                    </mat-option>
-                                </mat-select>
-                            </mat-form-field>
-                        </ion-col>
-                    </ion-row>
-                    <ion-row>
-                        <mat-form-field class="example-full-width">
-                            <mat-label>Destination</mat-label>
-                            <mat-select formControlName="destination" name="destination">
-                                <mat-option *ngFor="let item of getDestinationArray" [value]="item.destination">
-                                    {{item.destination}}
-                                </mat-option>
-                            </mat-select>
-                        </mat-form-field>
-
-                    </ion-row>
-                    <div formArrayName="stopsList">
-                        <ion-row *ngFor="let d of stopsList?.controls; index as i" [formGroupName]="i">
-                            <ion-col>
-                                <mat-form-field class="example-full-width">
-                                    <mat-label>Stops</mat-label>
-                                    <input type="text" placeholder="Pick one" aria-label="StopName" matInput
-                                        formControlName="stopName">
-                                </mat-form-field>
-                            </ion-col>
-                            <ion-col *ngIf="i>0">
-                                <ion-button size="small" fill="outline" (click)="deleteThisStop(i)">
-                                    <ion-icon name="close-outline"></ion-icon>
-
-                                </ion-button>
-                            </ion-col>
-                        </ion-row>
-                    </div>
-                    <ion-button size="small" fill="outline" (click)="addStopsInput()">
-                        <ion-icon name="add-outline"></ion-icon>
-                        Add Destination
-                    </ion-button>
-                    <ion-button size="small" fill="outline" (click)="removeStops()">
-                        <ion-icon name="add-outline"></ion-icon>
-                        Remove Destination
-                    </ion-button>
-                </ion-grid>
-            </form>
-        </ion-content>
-    </ng-template>
-</ion-modal>

@@ -1,0 +1,73 @@
+<ion-header [translucent]="true">
+    <ion-toolbar>
+        <ion-buttons slot="start">
+            <ion-back-button></ion-back-button>
+        </ion-buttons>
+        <ion-button id="add-depo" class="ion-float-right ripple-effect">Add Depo</ion-button>
+    </ion-toolbar>
+
+
+</ion-header>
+<ion-content [fullscreen]="true">
+    <div id="container" style="height: 100%;">
+        <div class="example-header text-right">
+            Page Size:
+            <select (change)="onPageSizeChanged()" id="page-size">
+                <option value="10">10</option>
+                <option value="100">100</option>
+                <option value="500">500</option>
+                <option value="1000">1000</option>
+            </select>
+        </div>
+        <ag-grid-angular style="height: 500px;" class="ag-theme-alpine m-auto" id="myGrid" [animateRows]="true"
+            (gridReady)="onGridReady($event)" [gridOptions]="gridOptions" [rowData]="rowData" [columnDefs]="columnDefs"
+            [cacheQuickFilter]="true" [defaultColDef]="defaultColDef" [pagination]="true" [paginationPageSize]="10">
+        </ag-grid-angular>
+    </div>
+</ion-content>
+
+<ion-modal trigger="add-depo">
+    <ng-template>
+        <ion-header>
+            <ion-toolbar>
+                <ion-buttons slot="start">
+                    <ion-button fill="outline" size="small" color="danger" (click)="closeModal()">Cancel</ion-button>
+                </ion-buttons>
+                <ion-title class="ion-text-center">Add Depo</ion-title>
+                <ion-buttons slot="end">
+                    <ion-button fill="outline" [disabled]="!addDepoForm?.valid" size="small" color="secondary"
+                        (click)="confirm()" [strong]="true">
+                        Confirm</ion-button>
+                </ion-buttons>
+            </ion-toolbar>
+        </ion-header>
+        <ion-content class="ion-padding">
+            <form [formGroup]="addDepoForm">
+                <ion-grid>
+                    <ion-row>
+                        <mat-form-field class="example-full-width">
+                            <mat-label>Bus Depo</mat-label>
+                            <input type="text" placeholder="Pick one" aria-label="Depo" matInput
+                                formControlName="busDepo">
+                        </mat-form-field>
+                    </ion-row>
+                    <ion-row>
+                        <mat-form-field class="example-full-width">
+                            <mat-label>Sub-Dist</mat-label>
+                            <input type="text" placeholder="Enter Sub District" aria-label="SubDistrict" matInput
+                                formControlName="subDistrict">
+                        </mat-form-field>
+                    </ion-row>
+                    <ion-row>
+
+                        <mat-form-field class="example-full-width">
+                            <mat-label>Dist</mat-label>
+                            <input type="text" placeholder="Enter District" aria-label="District" matInput
+                                formControlName="district">
+                        </mat-form-field>
+                    </ion-row>
+                </ion-grid>
+            </form>
+        </ion-content>
+    </ng-template>
+</ion-modal>

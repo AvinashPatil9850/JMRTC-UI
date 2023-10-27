@@ -1,25 +1,89 @@
 <ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-buttons slot="start">
-      <ion-back-button></ion-back-button>
-    </ion-buttons>
-  </ion-toolbar>
+    <ion-toolbar>
+        <ion-buttons slot="start">
+            <ion-back-button></ion-back-button>
+        </ion-buttons>
+        <ion-button id="addDestination" class="ion-float-right ripple-effect">Add Destination</ion-button>
+    </ion-toolbar>
 
 
 </ion-header>
 <ion-content [fullscreen]="true">
-  <div id="container" style="height: 100%;">
-    <div class="example-header text-right">
-      Page Size:
-      <select (change)="onPageSizeChanged()" id="page-size">
-        <option value="10">10</option>
-        <option value="100">100</option>
-        <option value="500">500</option>
-        <option value="1000">1000</option>
-      </select>
+    <div id="container" style="height: 100%;">
+        <div class="example-header text-right">
+            Page Size:
+            <select (change)="onPageSizeChanged()" id="page-size">
+                <option value="10">10</option>
+                <option value="100">100</option>
+                <option value="500">500</option>
+                <option value="1000">1000</option>
+            </select>
+        </div>
+        <ag-grid-angular style="height: 500px;" class="ag-theme-alpine m-auto" id="myGrid" [animateRows]="true"
+            (gridReady)="onGridReady($event)" [gridOptions]="gridOptions" [rowData]="rowData" [columnDefs]="columnDefs"
+            [cacheQuickFilter]="true" [defaultColDef]="defaultColDef" [pagination]="true" [paginationPageSize]="10">
+        </ag-grid-angular>
+        <!-- <ag-grid-angular style="width: 100%; height: 100%;" class="ag-theme-alpine" [animateRows]="true" [columnDefs]="columnDefs" [defaultColDef]="defaultColDef" [rowData]="rowData" (gridReady)="onGridReady($event)"></ag-grid-angular> -->
     </div>
-    <ag-grid-angular style="height: 500px;" class="ag-theme-alpine m-auto" id="myGrid" [animateRows]="true" (gridReady)="onGridReady($event)" [gridOptions]="gridOptions" [rowData]="rowData" [columnDefs]="columnDefs" [cacheQuickFilter]="true" [defaultColDef]="defaultColDef" [pagination]="true" [paginationPageSize]="10">
-    </ag-grid-angular>
-    <!-- <ag-grid-angular style="width: 100%; height: 100%;" class="ag-theme-alpine" [animateRows]="true" [columnDefs]="columnDefs" [defaultColDef]="defaultColDef" [rowData]="rowData" (gridReady)="onGridReady($event)"></ag-grid-angular> -->
-  </div>
 </ion-content>
+
+<ion-modal trigger="addDestination">
+    <ng-template>
+        <ion-header>
+            <ion-toolbar>
+                <ion-buttons slot="start">
+                    <ion-button fill="outline" size="small" color="danger" (click)="closeModal()">Cancel</ion-button>
+                </ion-buttons>
+                <ion-title class="ion-text-center">Add Destinations</ion-title>
+                <ion-buttons slot="end">
+                    <ion-button fill="outline" [disabled]="!addDestinationsForm?.valid" size="small" color="secondary"
+                        (click)="confirm()" [strong]="true">
+                        Confirm</ion-button>
+                </ion-buttons>
+            </ion-toolbar>
+        </ion-header>
+        <ion-content class="ion-padding">
+            <form [formGroup]="addDestinationsForm">
+                <ion-grid>
+                    <ion-row>
+                        <ion-col>
+                            <mat-form-field class="example-full-width">
+                                <mat-label>Bus Depo</mat-label>
+                                <mat-select placeholder="Pick one" formControlName="busDepo" name="busDepo">
+                                    <mat-option *ngFor="let item of depoList" [value]="item.busDepo">
+                                        {{item.busDepo}}
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </ion-col>
+                    </ion-row>
+                    <div formArrayName="destinationArr">
+                        <ion-row *ngFor="let d of destinationArr?.controls; index as i" [formGroupName]="i">
+                            <ion-col>
+                                <mat-form-field class="example-full-width">
+                                    <mat-label>Destination</mat-label>
+                                    <input type="text" placeholder="Pick one" aria-label="Destination" matInput
+                                        formControlName="destination">
+                                </mat-form-field>
+                            </ion-col>
+                            <ion-col *ngIf="i>0">
+                                <ion-button size="small" fill="outline" (click)="deleteThisDestination(i)">
+                                    <ion-icon name="close-outline"></ion-icon>
+
+                                </ion-button>
+                            </ion-col>
+                        </ion-row>
+                    </div>
+                    <ion-button size="small" fill="outline" (click)="addDestination()">
+                        <ion-icon name="add-outline"></ion-icon>
+                        Add Destination
+                    </ion-button>
+                    <ion-button size="small" fill="outline" (click)="removeDestination()">
+                        <ion-icon name="add-outline"></ion-icon>
+                        Remove Destination
+                    </ion-button>
+                </ion-grid>
+            </form>
+        </ion-content>
+    </ng-template>
+</ion-modal>

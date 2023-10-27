@@ -1,10 +1,11 @@
-import { HttpClient } from '@angular/common/http';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { AgGridAngular } from 'ag-grid-angular';
 import { ColDef, GridApi, GridOptions, GridReadyEvent, ICellRendererParams } from 'ag-grid-community';
 import { NgToastService } from 'ng-angular-popup';
 import { MsrtcService } from 'src/app/services/msrtc.service';
 import { BusListCellRendererComponent } from '../bus-list/bus-list-cell-renderer/bus-list-cell-renderer.component';
+import { IonModal } from '@ionic/angular';
+import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-destination-list',
@@ -12,16 +13,18 @@ import { BusListCellRendererComponent } from '../bus-list/bus-list-cell-renderer
   styleUrls: ['./destination-list.component.scss'],
 })
 export class DestinationListComponent implements OnInit {
+  @ViewChild(IonModal) modal: IonModal;
+
   allDestinationArray: any;
   gridOptions: GridOptions;
   private gridApi!: GridApi<any>;
   rowData: any = [];
   paginationSize: number = 10;
   columnDefs: ColDef[] = [];
-
+  depoList: any;
   constructor(private _msertcService: MsrtcService,
-    private http: HttpClient,
-    private _toast: NgToastService,) {
+    private _toast: NgToastService,
+    private fb: FormBuilder,) {
     this.gridOptions = <GridOptions>{
       enableSorting: true,
       // enable filtering 
@@ -32,7 +35,10 @@ export class DestinationListComponent implements OnInit {
 
 
   ngOnInit() {
+
     this.getAllDestination();
+    this.addDestinationOnInit();
+    this.getAllDepoList();
   }
   //ag grid configuration starts
 
@@ -77,9 +83,7 @@ export class DestinationListComponent implements OnInit {
       }
     });
   }
-  onCellClicked($event: any) {
 
-  }
   setColumnHeader() {
     this.columnDefs = [
       {
@@ -152,5 +156,68 @@ export class DestinationListComponent implements OnInit {
       }
       );
     }
+  }
+
+  // modal 
+
+  addDestinationsForm: FormGroup;
+
+  addDestinationOnInit() {
+    this.addDestinationsForm = this.fb.group({
+      busDepo: ['Jamner', Validators.required],
+      destinationArr: new FormArray([
+        new FormGroup({
+          destination: new FormControl('', Validators.required),
+        })
+      ])
+    });
+  }
+  get destinationArr(): FormArray {
+    return this.addDestinationsForm.get('destinationArr') as FormArray;
+  }
+
+  addDestination() {
+    this.destinationArr.push(new FormGroup({
+      destination: new FormControl(''),
+    }))
+  }
+
+  removeDestination() {
+    if (this.destinationArr.length > 0)
+      this.destinationArr.removeAt(this.destinationArr.length - 1);
+  }
+  deleteThisDestination(i: any) {
+    this.destinationArr.removeAt(i);
+  }
+
+  confirm() {
+    // let defaultDestination = this.destinationArr.get('busDepo')?.value
+    console.log("add-destination", this.addDestinationsForm.value)
+
+    this._msertcService.addDestination(this.addDestinationsForm.value).subscribe({
+      next: res => {
+        this.modal.dismiss(null, 'cancel');
+        this.getAllDestination();
+        this._toast.success({ detail: "SUCCESS", summary: 'Destination Added successfulley', duration: 5000 });
+      },
+      error: error => {
+        this.modal.dismiss(null, 'cancel');
+        this._toast.error({ detail: "ERROR", summary: 'Failed To Add', duration: 5000 });
+      }
+    })
+  }
+
+  closeModal() {
+    this.modal.dismiss(null, 'cancel');
+  }
+  getAllDepoList() {
+    this._msertcService.getAllDepoList().subscribe({
+      next: (res: any) => {
+        this.depoList = res;
+      },
+      error: error => {
+        this._toast.error({ detail: "ERROR", summary: 'Failed To Get Depo List', duration: 5000 });
+      }
+    });
   }
 }
